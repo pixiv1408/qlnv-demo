@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: '#495057',
     fontWeight: '600',
-    textAlign: 'left',
+    textAlign: 'center',
     marginBottom: 35,
   },
   input: {

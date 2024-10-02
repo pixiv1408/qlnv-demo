@@ -13,12 +13,14 @@ import {
 import PrimaryButton from "../../components/primary-button/primary-button.component";
 import styles from "./update-employee.styles";
 import { updateEmployee as updateEmployeeRedux } from '../../redux/employees/employee.slice';
+import { fetchUpdateEmployeeThunk } from '../../redux/employees/employee.thunk';
 
 const UpdateEmployee = ({ navigation, route }) => {
   const { data } = route.params;
   const [id] = useState(String(data.id));
   const [name, setName] = useState(data.name);
   const [duty, setDuty] = useState(data.duty);
+  const [image] = useState(data.image);
   const dispatch = useDispatch();
 
   const updateEmployee = () => {
@@ -28,7 +30,7 @@ const UpdateEmployee = ({ navigation, route }) => {
       return;
     }
 
-    dispatch(updateEmployeeRedux({ id, name, duty }));
+    dispatch(fetchUpdateEmployeeThunk({ id, name, duty, image }));
 
     navigation.goBack();
   }

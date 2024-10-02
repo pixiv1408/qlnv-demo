@@ -37,7 +37,7 @@ const Login = () => {
         style={styles.avoidingView}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <ScrollView>
-          <Text style={styles.title}>Thêm Nhân Viên</Text>
+          <Text style={styles.title}>Đăng Nhập</Text>
           <TextInput
             placeholder="Tên Đăng Nhập"
             style={styles.input}

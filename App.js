@@ -3,7 +3,9 @@ import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useEffect, useState } from 'react';
 import { Provider, useDispatch, useSelector } from 'react-redux';
+import * as SplashScreen from 'expo-splash-screen';
 
 import EmployeeList from './src/screens/employee-list/employee-list.component';
 import AddEmployee from './src/screens/add-employee/add-employee.component';
@@ -13,13 +15,17 @@ import store from './src/redux/store';
 import RemoveEmployee from './src/screens/remove-employee/remove-employee.component';
 import Login from './src/screens/login/login.component';
 import { getTokenThunk } from './src/redux/auth/auth.thunk';
+import { injectStore } from './src/helpers/api';
 
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
 
+injectStore(store);
+SplashScreen.preventAutoHideAsync();
+
 const App = () => (
   <Provider store={store}>
-    <ControllerStack/>
+    <ControllerStack />
   </Provider>
 );
 
@@ -39,15 +45,23 @@ const ProtectedStack = () => (
 
 const ControllerStack = () => {
   const token = useSelector(state => state.auth.token)
+  const [appIsReady, setAppIsReady] = useState(false);
   const dispatch = useDispatch();
   let rendering = null;
   const setup = async () => {
     await dispatch(getTokenThunk());
+    setAppIsReady(true);
   }
 
   useEffect(() => {
     setup();
   }, []);
+
+  useEffect(() => {
+    if (appIsReady) {
+      SplashScreen.hideAsync();
+    }
+  }, [appIsReady]);
 
   if (token) {
     rendering = <ProtectedStack />;

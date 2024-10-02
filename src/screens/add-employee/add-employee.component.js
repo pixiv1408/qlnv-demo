@@ -11,6 +11,7 @@ import {
 import PrimaryButton from "../../components/primary-button/primary-button.component";
 import styles from "./add-employee.styles";
 import { addEmployee as addEmployeeRedux } from '../../redux/employees/employee.slice';
+import { fetchAddEmployeeThunk } from '../../redux/employees/employee.thunk';
 
 const AddEmployee = ({ navigation }) => {
   const [name, setName] = useState('');
@@ -25,7 +26,7 @@ const AddEmployee = ({ navigation }) => {
       return;
     }
 
-    dispatch(addEmployeeRedux({ name, duty, image }));
+    dispatch(fetchAddEmployeeThunk({ name, duty, image }));
 
     navigation.goBack();
   };
